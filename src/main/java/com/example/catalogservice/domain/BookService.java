@@ -37,7 +37,18 @@ public class BookService {
     }
 
     public Book editBookDetails(String isbn, Book book) {
-        return repository.save(book);
+        return repository.findByIsbn(isbn)
+                .map(existingBook -> {
+                    var bookToUpdate = new Book(
+                            existingBook.id(),
+                            existingBook.isbn(),
+                            book.title(),
+                            book.author(),
+                            book.price(),
+                            existingBook.version()
+                    );
+                    return repository.save(bookToUpdate);
+                }).orElseGet(() -> repository.save(book));
     }
 
     public void deleteByIsbn(String isbn) {
