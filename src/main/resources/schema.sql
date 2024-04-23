@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS books;
-CREATE TABLE book {
+DROP TABLE IF EXISTS book;
+CREATE TABLE book (
     id      BIGSERIAL PRIMARY KEY NOT NULL,
     isbn    varchar(255) UNIQUE NOT NULL,
     title   varchar(255) NOT NULL,
@@ -7,5 +7,5 @@ CREATE TABLE book {
     price   float(8) NOT NULL,
     created_date timestamp NOT NULL,
     last_modified_date timestamp NOT NULL,
-    version integer NOT NULL,
-}
+    version integer NOT NULL
+);

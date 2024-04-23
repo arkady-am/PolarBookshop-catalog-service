@@ -54,6 +54,7 @@ public class BookService {
     }
 
     public void deleteByIsbn(String isbn) {
-        repository.findByIsbn(isbn).ifPresent(repository::delete);
+        // repository.findByIsbn(isbn).ifPresent(repository::delete);
+        repository.findByIsbn(isbn).ifPresent(book -> repository.deleteByIsbn(book.isbn()));
     }
 }
