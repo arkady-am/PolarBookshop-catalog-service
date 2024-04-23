@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
 import org.springframework.boot.test.json.JacksonTester;
 
+import java.time.Instant;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @JsonTest
@@ -21,13 +23,15 @@ public class BookJsonTests {
         assertThat(json.write(book)).extractingJsonPathStringValue("@.title").isEqualTo("Title");
         assertThat(json.write(book)).extractingJsonPathStringValue("@.author").isEqualTo("Author");
         assertThat(json.write(book)).extractingJsonPathNumberValue("@.price").isEqualTo(9.99);
+        assertThat(json.write(book)).extractingJsonPathStringValue("@.createdDate").isEqualTo(null);
+        assertThat(json.write(book)).extractingJsonPathStringValue("@.lastModifiedDate").isEqualTo(null);
         assertThat(json.write(book)).extractingJsonPathNumberValue("@.version").isEqualTo(0);
     }
 
     @Test
     void testDeserialize() throws Exception {
-        String content = "{\"id\":123,\"isbn\":\"1234\",\"title\":\"Title\",\"author\":\"Author\",\"price\":9.99, \"version\":0}";
-        Book book = new Book(123L, "1234", "Title", "Author", 9.99, 0);
+        String content = "{\"id\":123,\"isbn\":\"1234\",\"title\":\"Title\",\"author\":\"Author\",\"price\":9.99,\"createdDate\":\"2007-12-03T10:15:30.00Z\",\"lastModifiedDate\":\"2008-12-03T10:15:30.00Z\",\"version\":0}";
+        Book book = new Book(123L, "1234", "Title", "Author", 9.99, Instant.parse("2007-12-03T10:15:30.00Z"), Instant.parse("2008-12-03T10:15:30.00Z"), 0);
         assertThat(json.parse(content)).isEqualTo(book);
         assertThat(json.parseObject(content).id()).isEqualTo(123L);
         assertThat(json.parseObject(content).isbn()).isEqualTo("1234");
