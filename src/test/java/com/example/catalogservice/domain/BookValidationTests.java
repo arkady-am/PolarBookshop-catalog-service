@@ -25,14 +25,14 @@ public class BookValidationTests {
 
     @Test
     public void whenAllFieldsAreValid_thenValidationSucceeds() {
-        Book book = Book.of("9781234567897", "Title", "Author", 19.99);
+        Book book = Book.of("9781234567897", "Title", "Author", "Publisher", 19.99);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertTrue(violations.isEmpty());
     }
 
     @Test
     public void whenIsbnIsBlank_thenValidationFails() {
-        Book book = Book.of("", "Title", "Author", 19.99);
+        Book book = Book.of("", "Title", "Author", "Publisher", 19.99);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         List<String> violationMessages = violations.stream()
                 .map(ConstraintViolation::getMessage)
@@ -46,7 +46,7 @@ public class BookValidationTests {
 
     @Test
     public void whenIsbnIsInvalid_thenValidationFails() {
-        Book book = Book.of("invalid", "Title", "Author", 19.99);
+        Book book = Book.of("invalid", "Title", "Author", "Publisher", 19.99);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations.size()).isEqualTo(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo(Book.MESSAGE_ISBN_VALID);
@@ -54,7 +54,7 @@ public class BookValidationTests {
 
     @Test
     public void whenAuthorIsBlank_thenValidationFails() {
-        Book book = Book.of("9781234567897", "Title", "", 19.99);
+        Book book = Book.of("9781234567897", "Title", "", "Publisher", 19.99);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations.size()).isEqualTo(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo(Book.MESSAGE_AUTHOR_MANDATORY);
@@ -62,7 +62,7 @@ public class BookValidationTests {
 
     @Test
     public void whenTitleIsBlank_thenValidationFails() {
-        Book book = Book.of("9781234567897", "", "Author", 19.99);
+        Book book = Book.of("9781234567897", "", "Author", "Publisher", 19.99);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations.size()).isEqualTo(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo(Book.MESSAGE_TITLE_MANDATORY);
@@ -70,7 +70,7 @@ public class BookValidationTests {
 
     @Test
     public void whenPriceIsNull_thenValidationFails() {
-        Book book = Book.of("9781234567897", "Title", "Author", null);
+        Book book = Book.of("9781234567897", "Title", "Author", "Publisher", null);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations.size()).isEqualTo(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo(Book.MESSAGE_PRICE_MANDATORY);
@@ -78,7 +78,7 @@ public class BookValidationTests {
 
     @Test
     public void whenPriceIsBelowZero_thenValidationFails() {
-        Book book = Book.of("9781234567897", "Title", "Author", -1.0);
+        Book book = Book.of("9781234567897", "Title", "Author", "Publisher", -1.0);
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations.size()).isEqualTo(1);
         assertThat(violations.iterator().next().getMessage()).isEqualTo(Book.MESSAGE_PRICE_POSITIVE);

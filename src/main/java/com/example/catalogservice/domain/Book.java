@@ -21,6 +21,7 @@ public record Book(
         String title,
         @NotBlank(message = Book.MESSAGE_AUTHOR_MANDATORY)
         String author,
+        String publisher,
         @NotNull(message = Book.MESSAGE_PRICE_MANDATORY)
         @Positive(message = Book.MESSAGE_PRICE_POSITIVE)
         Double price,
@@ -43,8 +44,9 @@ public record Book(
             String isbn,
             String title,
             String author,
+            String publisher,
             Double price
     ) {
-        return new Book(null, isbn, title, author, price, null, null, 0);
+        return new Book(null, isbn, title, author, publisher, price, null, null, 0);
     }
 }

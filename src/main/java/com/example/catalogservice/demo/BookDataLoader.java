@@ -22,8 +22,8 @@ public class BookDataLoader {
     public void loadBookTestData() {
         bookRepository.deleteAll();
         bookRepository.saveAll(List.of(
-                Book.of("1234567891", "Northern Lights", "Lyra Silverstar", 9.90),
-                Book.of("1234567892", "Polar Journey", "Iorek Polarson", 12.90)
+                Book.of("1234567891", "Northern Lights", "Lyra Silverstar", "Penguin", 9.90),
+                Book.of("1234567892", "Polar Journey", "Iorek Polarson", "Jostar", 12.90)
         ));
     }
 }
