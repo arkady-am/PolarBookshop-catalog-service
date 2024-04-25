@@ -121,6 +121,8 @@
                         <spring.profiles.active>testdata</spring.profiles.active>
                     </systemPropertyVariables>
                     <image>
+                        <!-- special builder to work with arm64 architecture -->
+                        <builder>dashaun/builder:tiny</builder>
                         <name>${project.name}</name>
                         <env>
                             <BP_JVM_VERSION>17.*</BP_JVM_VERSION>
