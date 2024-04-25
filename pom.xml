@@ -17,6 +17,7 @@
         <java.version>17</java.version>
         <spring-cloud.version>2023.0.0</spring-cloud.version>
         <testcontainers.version>1.17.3</testcontainers.version>
+        <docker.imageName>${project.name}</docker.imageName>
     </properties>
     <dependencies>
         <dependency>
@@ -123,11 +124,21 @@
                     <image>
                         <!-- special builder to work with arm64 architecture -->
                         <builder>dashaun/builder:tiny</builder>
-                        <name>${project.name}</name>
+                        <name>${docker.imageName}</name>
                         <env>
                             <BP_JVM_VERSION>17.*</BP_JVM_VERSION>
                         </env>
                     </image>
+                    <docker>
+                        <publishRegistry>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <url>${docker.publishRegistry.url}</url>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <username>${docker.publishRegistry.username}</username>
+                            <!--suppress UnresolvedMavenProperty -->
+                            <password>${docker.publishRegistry.password}</password>
+                        </publishRegistry>
+                    </docker>
                 </configuration>
                 <executions>
                     <execution>
