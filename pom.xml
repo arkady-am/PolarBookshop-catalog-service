@@ -11,7 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>catalog-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Catalog Service</name>
+    <name>catalog-service</name>
     <description>Catalog service from memory using maven</description>
     <properties>
         <java.version>17</java.version>
@@ -120,7 +120,20 @@
                     <systemPropertyVariables>
                         <spring.profiles.active>testdata</spring.profiles.active>
                     </systemPropertyVariables>
+                    <image>
+                        <name>${project.name}</name>
+                        <env>
+                            <BP_JVM_VERSION>17.*</BP_JVM_VERSION>
+                        </env>
+                    </image>
                 </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>build-image</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
